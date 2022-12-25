@@ -4,8 +4,8 @@
 
 Customizable variables:
 - sentences: number of sentences to be generated
-- cap_prob: = proportion of words to start with a capital letter
-- comma_prob = density of commas
+- cap_prob: proportion of words to start with a capital letter
+- comma_prob: density of commas
 
 Parameters are chosen based on a 30,386 word body of English-language text from various sources (journalistic, encyclopedic, legal etc.):
 
