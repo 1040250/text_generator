@@ -55,8 +55,8 @@ def build_word(w, sent_length, word_length_last):
 def pick_letters(l, word_length, vowel_start):
     # pick letters for word (consonants and vowels take turns, one-letter words are vowels)
     global letter
-    x = 1 if word_length == 1 or vowel_start else 0
-    match x + l%2:
+    vowel = 1 if word_length == 1 or vowel_start else 0
+    match vowel + l%2:
         case 0|2:
             letter = r.choices(consonants, cons_weights_EN)[0]
         case 1:
