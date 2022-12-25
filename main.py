@@ -6,7 +6,7 @@ import numpy as np
 __author__ = "Manuel J. Adams"
 __version__ = "1.1"
 
-sentences = 40      # number of sentences to be generated
+sentences = 20      # number of sentences to be generated
 cap_prob = 0.05     # density of capitalized words
 comma_prob = 0.1    # density of commas
 
@@ -47,13 +47,21 @@ def build_word(w, sent_length, word_length_last):
     # determine if word capitalized (extra letter in addition to word length)
     cap = True if cap_prob > np.random.rand() and w > 0 and word_length > 3 else False
     word += letters[r.randint(0, len(letters) - 1)] if cap else word  # start word with cap if so decided above
-    for l in range(word_length): # pick letters for word (consonants and vowels take turns, one-letter words are vowels)
-        if word_length == 1 or vowel_start:
-            letter = r.choices(consonants, cons_weights_EN)[0] if l / 2 != l // 2 else r.choices(vowels, vowel_weights_EN)[0]
-        else:
-            letter = r.choices(consonants, cons_weights_EN)[0] if l / 2 == l // 2 else r.choices(vowels, vowel_weights_EN)[0]
+    for l in range(word_length):
+        letter = pick_letters(l, word_length, vowel_start)
         word += letter # add letter to word
     return word
+
+def pick_letters(l, word_length, vowel_start):
+    # pick letters for word (consonants and vowels take turns, one-letter words are vowels)
+    global letter
+    x = 1 if word_length == 1 or vowel_start else 0
+    match x + l%2:
+        case 0|2:
+            letter = r.choices(consonants, cons_weights_EN)[0]
+        case 1:
+            letter = r.choices(vowels, vowel_weights_EN)[0]
+    return letter
 
 if __name__ == '__main__':
     main()
